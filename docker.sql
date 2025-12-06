@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database:3306
--- Generation Time: Dec 06, 2025 at 02:35 AM
+-- Generation Time: Dec 06, 2025 at 03:25 AM
 -- Server version: 8.4.6
 -- PHP Version: 8.2.29
 
@@ -68,6 +68,18 @@ CREATE TABLE `complex` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `images_of_apartments`
+--
+
+CREATE TABLE `images_of_apartments` (
+  `id` int NOT NULL,
+  `image` text NOT NULL,
+  `apartments_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `layouts`
 --
 
@@ -89,6 +101,13 @@ CREATE TABLE `users` (
   `password` text NOT NULL,
   `role` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `login`, `password`, `role`) VALUES
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -114,6 +133,13 @@ ALTER TABLE `buildings`
 --
 ALTER TABLE `complex`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `images_of_apartments`
+--
+ALTER TABLE `images_of_apartments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `apartments_id` (`apartments_id`);
 
 --
 -- Indexes for table `layouts`
@@ -151,6 +177,12 @@ ALTER TABLE `complex`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `images_of_apartments`
+--
+ALTER TABLE `images_of_apartments`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `layouts`
 --
 ALTER TABLE `layouts`
@@ -160,7 +192,7 @@ ALTER TABLE `layouts`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -178,6 +210,12 @@ ALTER TABLE `apartments`
 --
 ALTER TABLE `buildings`
   ADD CONSTRAINT `buildings_ibfk_1` FOREIGN KEY (`complex_id`) REFERENCES `complex` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `images_of_apartments`
+--
+ALTER TABLE `images_of_apartments`
+  ADD CONSTRAINT `images_of_apartments_ibfk_1` FOREIGN KEY (`apartments_id`) REFERENCES `apartments` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `layouts`
