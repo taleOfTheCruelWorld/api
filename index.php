@@ -9,6 +9,7 @@ use Slim\Views\PhpRenderer;
 use Src\Controllers\AuthController;
 use Src\Controllers\HomeController;
 use Src\Middleware\AuthMiddleware;
+use Src\Controllers\ApiController;
 
 
 
@@ -31,6 +32,8 @@ ORM::configure('password', 'tiger');
 
 $app->get('/login', [AuthController::class, "loginPage"]);
 $app->post('/login', [AuthController::class, "login"]);
+$app->get('/api/buildings/{slug}', [ApiController::class, "getBuilding"]);
+$app->get('/api/apartments', [ApiController::class, "getApartments"]);
 
 $app->group('/', function() use ($app){
     $app->get('/logout', [AuthController::class, "logout"]);
