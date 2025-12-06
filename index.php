@@ -6,6 +6,9 @@ use Slim\Flash\Messages;
 use Slim\Psr7\Factory\ResponseFactory;
 use Slim\Psr7\Message;
 use Slim\Views\PhpRenderer;
+use Src\Controllers\AuthController;
+use Src\Controllers\HomeController;
+use Src\Middleware\AuthMiddleware;
 
 
 
@@ -26,5 +29,11 @@ ORM::configure('mysql:host=database;dbname=docker');
 ORM::configure('username', 'root');
 ORM::configure('password', 'tiger');
 
+$app->get('/login', [AuthController::class, "loginPage"]);
+$app->post('/login', [AuthController::class, "login"]);
 
+$app->group('/', function() use ($app){
+    $app->get('/logout', [AuthController::class, "logout"]);
+    $app->get('/', [HomeController::class, "home"]);
+})->add(new AuthMiddleware($container->get(ResponseFactory::class)));
 $app->run();

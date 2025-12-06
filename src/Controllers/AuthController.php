@@ -20,13 +20,27 @@ class AuthController extends Controller
         }
         if ( md5($password) == $user['password']) {
             $_SESSION['user_id'] = $user['id'];
-            return $response->withStatus(302)->withHeader('Location', "/");
+            switch ($user['role']) {
+            case 'admin':
+                $_SESSION['user_role'] = $user['role'];
+                return $response->withStatus(302)->withHeader('Location', "/admin/");
+                break;
+            case 'manager':
+                $_SESSION['user_role'] = $user['role'];
+                return $response->withStatus(302)->withHeader('Location', "/manager/");
+                break;
+            case 'reader':
+                $_SESSION['user_role'] = $user['role'];
+                return $response->withStatus(302)->withHeader('Location', "/reader/");
+                break;
+            }
         }
         $this->messages->addMessage('userMessage', 'Password incorrect');
         return $response->withStatus(302)->withHeader('Location', "/login");
     }
     public function logout(RequestInterface $request, ResponseInterface $response, $args) {
         unset($_SESSION['user_id']);
+        unset($_SESSION['user_role']);
         return $response->withStatus(302)->withHeader('Location', "/");
     }
 }
