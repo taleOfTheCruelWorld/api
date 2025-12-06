@@ -8,11 +8,12 @@ use Slim\Psr7\Message;
 use Slim\Views\PhpRenderer;
 use Src\Controllers\AuthController;
 use Src\Controllers\HomeController;
-use Src\Middleware\AdminMiddleware;
-use Src\Middleware\AuthMiddleware;
 use Src\Controllers\ApiController;
 use Src\Controllers\ComplexController;
+use Src\Middleware\AdminMiddleware;
 use Src\Middleware\ManagerMiddleware;
+use Src\Middleware\AuthMiddleware;
+use src\Controllers\BController;
 
 
 
@@ -45,11 +46,24 @@ $app->group('/', function () use ($app) {
 
 
 $app->group('/', function () use ($app) {
+
+    #complex
     $app->get('/complex/create', [ComplexController::class, 'addComplexPage']);
     $app->post('/complex/create', [ComplexController::class, 'addComplex']);
     $app->get('/complex/{id}/edit', [ComplexController::class, 'editComplexPage']);
     $app->post('/complex/{id}/edit', [ComplexController::class, 'editComplex']);
     $app->get('/complex/{id}/delete', [ComplexController::class, 'complexDelete']);
+
+    #buildings
+    $app->get('/complex/{complex_id}/buildings/create', [BuildingController::class, 'addBuildingPage']);
+    $app->post('/complex/{complex_id}/buildings/create', [BuildingController::class, 'addBuilding']);
+    $app->get('/complex/{complex_id}/buildings/{building_id}/edit', [BuildingController::class, 'editBuildingPage']);
+    $app->post('/complex/{complex_id}/buildings/{building_id}/edit', [BuildingController::class, 'editBuilding']);
+    $app->get('/complex/{complex_id}/buildings/{building_id}/delete', [BuildingController::class, 'buildingDelete']);
+
+
+    #apartments
+
 })->add(new ManagerMiddleware($container->get(ResponseFactory::class)));
 
 
@@ -57,6 +71,7 @@ $app->group('/', function () use ($app) {
     $app->get('/', [HomeController::class, "home"]);
     $app->get('/logout', [AuthController::class, "logout"]);
     $app->get('/complex', [ComplexController::class, 'show']);
+    $app->get('/complex/{complex_id}/buildings', [BController::class, 'show']);
 })->add(new AuthMiddleware($container->get(ResponseFactory::class)));
 
 

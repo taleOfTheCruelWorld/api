@@ -5,8 +5,7 @@ namespace Src\Controllers;
 use ORM;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use SlugController;
-use src\Controllers\slug;
+
 
 class ComplexController extends Controller
 {
