@@ -8,9 +8,11 @@ use Slim\Psr7\Message;
 use Slim\Views\PhpRenderer;
 use Src\Controllers\AuthController;
 use Src\Controllers\HomeController;
+use Src\Middleware\AdminMiddleware;
 use Src\Middleware\AuthMiddleware;
 use Src\Controllers\ApiController;
 use Src\Controllers\ComplexController;
+use Src\Middleware\ManagerMiddleware;
 
 
 
@@ -36,14 +38,26 @@ $app->post('/login', [AuthController::class, "login"]);
 $app->get('/api/buildings/{slug}', [ApiController::class, "getBuilding"]);
 $app->get('/api/apartments', [ApiController::class, "getApartments"]);
 
+
 $app->group('/', function () use ($app) {
-    $app->get('/logout', [AuthController::class, "logout"]);
-    $app->get('/', [HomeController::class, "home"]);
-    $app->get('/complex', [ComplexController::class, 'show']);
+
+})->add(new AdminMiddleware($container->get(ResponseFactory::class)));
+
+
+$app->group('/', function () use ($app) {
     $app->get('/complex/create', [ComplexController::class, 'addComplexPage']);
     $app->post('/complex/create', [ComplexController::class, 'addComplex']);
     $app->get('/complex/{id}/edit', [ComplexController::class, 'editComplexPage']);
     $app->post('/complex/{id}/edit', [ComplexController::class, 'editComplex']);
     $app->get('/complex/{id}/delete', [ComplexController::class, 'complexDelete']);
+})->add(new ManagerMiddleware($container->get(ResponseFactory::class)));
+
+
+$app->group('/', function () use ($app) {
+    $app->get('/', [HomeController::class, "home"]);
+    $app->get('/logout', [AuthController::class, "logout"]);
+    $app->get('/complex', [ComplexController::class, 'show']);
 })->add(new AuthMiddleware($container->get(ResponseFactory::class)));
+
+
 $app->run();
