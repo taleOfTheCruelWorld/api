@@ -1,6 +1,3 @@
-<?php
-echo (md5('admin'));
-?>
 <!DOCTYPE html>
 <html lang="en">
     <head>

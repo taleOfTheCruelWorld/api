@@ -25,9 +25,14 @@ class ApiController extends Controller
                     'id'=>'123',
                     'image'=>'https://da.dsa',
                 ]
-            ],
+            ]
         ];
         $response->getBody()->write(json_encode($data));
-        return $response->withHeader('Content-Type', 'aplication/json')
+        return $response->withHeader('Content-Type', 'aplication/json');
+    }
+    public function getApartments(RequestInterface $request, ResponseInterface $response, $args) {
+        $data = \ORM::forTable('apartments')->join('image_of_apartments', array('image_of_', '=', 'p2.id'))->findArray();
+        $response->getBody()->write(json_encode($data));
+        return $response->withHeader('Content-Type', 'aplication/json');
     }
 }
