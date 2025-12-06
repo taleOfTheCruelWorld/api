@@ -1,3 +1,6 @@
+<?php
+echo (md5('admin'));
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -13,12 +16,10 @@
         <span> <?=$messages->getFirstMessage('userMessage')?></span>
         <br>
         <?endif?>
-        <form action="/auth/login" method="post">
+        <form action="/" method="post">
            <input type="text" name="login" id="login" placeholder="Login"> 
            <input type="password" name="password" id="password" placeholder="Password"> 
             <button type="submit">Enter</button>
         </form>
-        <a href="register">Sing-in</a>
-    
     </body>
 </html>

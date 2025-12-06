@@ -13,7 +13,7 @@ class AuthController extends Controller
     public function login(RequestInterface $request, ResponseInterface $response, $args) {
         $login = $request->getParsedBody()['login'];
         $password = $request->getParsedBody()['password'];
-        $user = \ORM::forTable("user")->where('user.name', $login)->findOne();
+        $user = \ORM::forTable("users")->where('login', $login)->findOne();
         if ($user == null) {
             $this->messages->addMessage('userMessage', 'This user does not exist');
             return $response->withStatus(302)->withHeader('Location', "/login");
@@ -23,17 +23,15 @@ class AuthController extends Controller
             switch ($user['role']) {
             case 'admin':
                 $_SESSION['user_role'] = $user['role'];
-                return $response->withStatus(302)->withHeader('Location', "/admin/");
                 break;
             case 'manager':
                 $_SESSION['user_role'] = $user['role'];
-                return $response->withStatus(302)->withHeader('Location', "/manager/");
                 break;
             case 'reader':
                 $_SESSION['user_role'] = $user['role'];
-                return $response->withStatus(302)->withHeader('Location', "/reader/");
                 break;
             }
+                return $response->withStatus(302)->withHeader('Location', "/");
         }
         $this->messages->addMessage('userMessage', 'Password incorrect');
         return $response->withStatus(302)->withHeader('Location', "/login");
