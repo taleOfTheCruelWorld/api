@@ -20,15 +20,15 @@ class ApiController extends Controller
             'name' => $complex['name'],
             'adress'=> $complex['adress'],
             'latitude'=>$complex['latitude'],
-            'longtude'=>$complex['longtude'],
+            'longitude'=>$complex['longitude'],
             'sectors' => $buildings,           
             'layouts' => $layouts       
         ];
         $response->getBody()->write(json_encode($data));
-        return $response->withHeader('Content-Type', 'aplication/json');
+        return $response->withHeader('Content-Type', 'application/json');
     }
     public function getApartments(RequestInterface $request, ResponseInterface $response, $args) {
-        $data = \ORM::forTable('apartments')->rawQuery('SELECT ap.*, GROUP_CONCAT(im.image ORDER BY ap.id) AS images FROM `apartments` as ap LEFT JOIN images_of_apartments as im on ap.id=im.apartments_id GROUP BY ap.id')->findArray();
+        $data = \ORM::forTable('apartments')->rawQuery('SELECT ap.*, JSON_ARRAYAGG(im.image) AS images FROM `apartments` as ap LEFT JOIN images_of_apartments as im on ap.id=im.apartments_id GROUP BY ap.id')->findArray();
         $response->getBody()->write(json_encode($data));
         return $response->withHeader('Content-Type', 'application/json');
     }
