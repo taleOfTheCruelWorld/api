@@ -13,7 +13,7 @@ use Src\Controllers\ComplexController;
 use Src\Middleware\AdminMiddleware;
 use Src\Middleware\ManagerMiddleware;
 use Src\Middleware\AuthMiddleware;
-use src\Controllers\BController;
+use Src\Controllers\BuildingController;
 
 
 
@@ -71,7 +71,7 @@ $app->group('/', function () use ($app) {
     $app->get('/', [HomeController::class, "home"]);
     $app->get('/logout', [AuthController::class, "logout"]);
     $app->get('/complex', [ComplexController::class, 'show']);
-    $app->get('/complex/{complex_id}/buildings', [BController::class, 'show']);
+    $app->get('/complex/{complex_id}/buildings', [BuildingController::class, 'show']);
 })->add(new AuthMiddleware($container->get(ResponseFactory::class)));
 
 
