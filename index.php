@@ -10,18 +10,19 @@ use Src\Controllers\AuthController;
 use Src\Controllers\HomeController;
 use Src\Middleware\AuthMiddleware;
 use Src\Controllers\ApiController;
+use Src\Controllers\ComplexController;
 
 
 
 require __DIR__ . '/vendor/autoload.php';
 session_start();
 $container = new Container();
-AppFactory::setContainer ($container);
+AppFactory::setContainer($container);
 $app = AppFactory::create();
-$container->set(PhpRenderer::class, function() use ($container) {
-    return new PhpRenderer (__DIR__ . '/templates', ['messages'=> $container->get(Messages::class)]);
+$container->set(PhpRenderer::class, function () use ($container) {
+    return new PhpRenderer(__DIR__ . '/templates', ['messages' => $container->get(Messages::class)]);
 });
-$container->set(Message::class, function() {
+$container->set(Message::class, function () {
     return new Messages();
 });
 
@@ -35,8 +36,14 @@ $app->post('/login', [AuthController::class, "login"]);
 $app->get('/api/buildings/{slug}', [ApiController::class, "getBuilding"]);
 $app->get('/api/apartments', [ApiController::class, "getApartments"]);
 
-$app->group('/', function() use ($app){
+$app->group('/', function () use ($app) {
     $app->get('/logout', [AuthController::class, "logout"]);
     $app->get('/', [HomeController::class, "home"]);
+    $app->get('/complex', [ComplexController::class, 'show']);
+    $app->get('/complex/create', [ComplexController::class, 'addComplexPage']);
+    $app->post('/complex/create', [ComplexController::class, 'addComplex']);
+    $app->get('/complex/{id}/edit', [ComplexController::class, 'editComplexPage']);
+    $app->post('/complex/{id}/edit', [ComplexController::class, 'editComplex']);
+    $app->get('/complex/{id}/delete', [ComplexController::class, 'complexDelete']);
 })->add(new AuthMiddleware($container->get(ResponseFactory::class)));
 $app->run();
