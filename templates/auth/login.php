@@ -16,7 +16,7 @@ echo (md5('admin'));
         <span> <?=$messages->getFirstMessage('userMessage')?></span>
         <br>
         <?endif?>
-        <form action="/" method="post">
+        <form action="/login" method="post">
            <input type="text" name="login" id="login" placeholder="Login"> 
            <input type="password" name="password" id="password" placeholder="Password"> 
             <button type="submit">Enter</button>
