@@ -7,16 +7,23 @@
     <title>Document</title>
 </head>
 
+<style>
+    img{
+        width: 400px;
+        height: 300px;
+    }
+</style>
+
 <body>
 
     <h1>layouts of this complex</h1>
-    <h1><a href="/complex/layouts/add">add layout</a></h1>
+    <h1><a href="/complex/<?=$complex_id?>/layouts/create">add layout</a></h1>
     <table>
         <? foreach ($layouts as $layout): ?>
             <tr>
-                <td><img src="<?= $layout['image'] ?>" alt=""></td>
-                <td><a href="/complex/<?=$complex_id?>/layouts/<?=$layout['id']?>/add"></a></td>
-                <a href="/complex/<?$complex_id?>/layouts/<?=$layout['id']?>/delete"></a>
+                <td><img src="/layouts/<?= $layout['image'] ?>" alt=""></td>
+                <td><a href="/complex/<?=$complex_id?>/layouts/<?=$layout['id']?>/edit">edit</a></td>
+                <td><a href="/complex/<?=$complex_id?>/layouts/<?=$layout['id']?>/delete">delete</a></td>
             </tr>
         <? endforeach ?>
     </table>

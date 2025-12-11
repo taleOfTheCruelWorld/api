@@ -7,6 +7,14 @@
     <title>Document</title>
 </head>
 
+<style>
+    img{
+        width: 400px;
+        height: 300px;
+    }
+</style>
+
+
 <body>
     <h1>apartments of this building</h1>
     <h1><a href="/complex/<?= $complex_id ?>/buildings/<?= $building_id ?>/apartments/create">add apartment</a></h1>
@@ -24,12 +32,15 @@
                 <td><?= $app['rooms'] ?></td>
                 <td><?= $app['floor'] ?></td>
                 <td><?= $app['price'] ?></td>
-                <td><?= $app['layout'] ?></td>
+                <td><img src="/layouts/<?=$app['layout']?>"></td>
                 <td><a
                         href="/complex/<?= $complex_id ?>/buildings/<?= $building_id ?>/apartments/<?= $app['id'] ?>/edit">edit</a>
                 </td>
                 <td><a
                         href="/complex/<?= $complex_id ?>/buildings/<?= $building_id ?>/apartments/<?= $app['id'] ?>/delete">delete</a>
+                </td>
+                <td><a
+                        href="/complex/<?= $complex_id ?>/buildings/<?= $building_id ?>/apartments/<?= $app['id'] ?>/images">images</a>
                 </td>
             </tr>
         <? endforeach ?>

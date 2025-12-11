@@ -15,6 +15,8 @@ use Src\Middleware\ManagerMiddleware;
 use Src\Middleware\AuthMiddleware;
 use Src\Controllers\BuildingController;
 use Src\Controllers\LayoutController;
+use Src\Controllers\ApartmentController;
+use Src\Controllers\ImagesController;
 
 
 
@@ -56,6 +58,11 @@ $app->group('/', function () use ($app) {
     $app->get('/complex/{id}/delete', [ComplexController::class, 'complexDelete']);
 
     #layouts
+    $app->get('/complex/{complex_id}/layouts/create', [LayoutController::class, 'addLayoutPage']);
+    $app->post('/complex/{complex_id}/layouts/create', [LayoutController::class, 'addLayout']);
+    $app->get('/complex/{complex_id}/layouts/{layout_id}/edit', [LayoutController::class, 'editLayoutPage']);
+    $app->post('/complex/{complex_id}/layouts/{layout_id}/edit', [LayoutController::class, 'editLayout']);
+    $app->get('/complex/{complex_id}/layouts/{layout_id}/delete', [LayoutController::class, 'layoutDelete']);
 
     #buildings
     $app->get('/complex/{complex_id}/buildings/create', [BuildingController::class, 'addBuildingPage']);
@@ -66,8 +73,19 @@ $app->group('/', function () use ($app) {
 
 
     #apartments
+    $app->get('/complex/{complex_id}/buildings/{building_id}/apartments/create', [ApartmentController::class, 'addApartmentPage']);
+    $app->post('/complex/{complex_id}/buildings/{building_id}/apartments/create', [ApartmentController::class, 'addApartment']);
+    $app->get('/complex/{complex_id}/buildings/{building_id}/apartments/{apartment_id}/edit', [ApartmentController::class, 'editApartmentPage']);
+    $app->post('/complex/{complex_id}/buildings/{building_id}/apartments/{apartment_id}/edit', [ApartmentController::class, 'editApartment']);
+    $app->get('/complex/{complex_id}/buildings/{building_id}/apartments/{apartment_id}/delete', [ApartmentController::class, 'apartmentDelete']);
 
-    
+    #apartment images
+    $app->get('/complex/{complex_id}/buildings/{building_id}/apartments/{apartment_id}/images/create', [ImagesController::class, 'addImagePage']);
+    $app->post('/complex/{complex_id}/buildings/{building_id}/apartments/{apartment_id}/images/create', [ImagesController::class, 'addImage']);
+    $app->get('/complex/{complex_id}/buildings/{building_id}/apartments/{apartment_id}/images/{image_id}/edit', [ImagesController::class, 'editImagePage']);
+    $app->post('/complex/{complex_id}/buildings/{building_id}/apartments/{apartment_id}/images/{image_id}/edit', [ImagesController::class, 'editImage']);
+    $app->get('/complex/{complex_id}/buildings/{building_id}/apartments/{apartment_id}/images/{image_id}/delete', [ImagesController::class, 'imageDelete']);
+
 
 })->add(new ManagerMiddleware($container->get(ResponseFactory::class)));
 
@@ -79,6 +97,8 @@ $app->group('/', function () use ($app) {
     $app->get('/complex/{complex_id}/layouts', [LayoutController::class, 'show']);
     $app->get('/complex/{complex_id}/buildings', [ComplexController::class, 'about']);
     $app->get('/complex/{complex_id}/buildings/{building_id}/apartments', [BuildingController::class, 'about']);
+    $app->get('/complex/{complex_id}/buildings/{building_id}/apartments/{apartment_id}/images', [ApartmentController::class, 'images']);
+
 })->add(new AuthMiddleware($container->get(ResponseFactory::class)));
 
 

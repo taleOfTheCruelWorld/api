@@ -11,7 +11,13 @@ class BuildingController extends Controller
 
     public function about(RequestInterface $request, ResponseInterface $response, $args)
     {
-        $apartments = ORM::forTable('apartments')->where('buildings_id', $args['building_id'])->findArray();
+        $apartments = ORM::for_table('apartments')
+            ->table_alias('p1')
+            ->select('p1.*')
+            ->select('p2.image', 'layout')
+            ->join('layouts', array('p1.layout_id', '=', 'p2.id'), 'p2')
+            ->find_array();
+
         return $this->renderer->render($response, '/reader/buildings/about.php', ['apartments' => $apartments, 'complex_id' => $args['complex_id'], 'building_id' => $args['building_id']]);
     }
 
