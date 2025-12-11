@@ -36,6 +36,12 @@ class ComplexController extends Controller
 
         return $text;
     }
+
+    public function about(RequestInterface $request, ResponseInterface $response, $args)
+    {
+        $buildings = ORM::forTable('buildings')->where('complex_id', $args['complex_id'])->findArray();
+        return $this->renderer->render($response, '/reader/complex/about.php', ['buildings' => $buildings, 'complex_id'=>$args['complex_id']]);
+    }
     public function show(RequestInterface $request, ResponseInterface $response)
     {
         $complex = ORM::forTable('complex')->findArray();

@@ -29,6 +29,8 @@
                 <td><?= $comp['slug'] ?></td>
                 <td><a href="/complex/<?= $comp['id'] ?>/edit">edit</a></td>
                 <td><a href="/complex/<?= $comp['id'] ?>/delete">delete</a></td>
+                <td><a href="/complex/<?=$comp['id']?>/layouts">layouts</a></td>
+                <td><a href="/complex/<?=$comp['id']?>/buildings">buildings of this complex</a></td>
             </tr>
         <? endforeach ?>
     </table>

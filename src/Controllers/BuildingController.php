@@ -9,11 +9,12 @@ use Psr\Http\Message\ResponseInterface;
 class BuildingController extends Controller
 {
 
-    public function show(RequestInterface $request, ResponseInterface $response)
+    public function about(RequestInterface $request, ResponseInterface $response, $args)
     {
-        $buildings = ORM::forTable('buildings')->findArray();
-        return $this->renderer->render($response, '/reader/buildings/list.php', ['buildings' => $buildings]);
+        $apartments = ORM::forTable('apartments')->where('buildings_id', $args['building_id'])->findArray();
+        return $this->renderer->render($response, '/reader/buildings/about.php', ['apartments' => $apartments, 'complex_id' => $args['complex_id'], 'building_id' => $args['building_id']]);
     }
+
 
     public function addBuildingPage(RequestInterface $request, ResponseInterface $response)
     {
@@ -25,17 +26,17 @@ class BuildingController extends Controller
 
         $data = $request->getParsedBody();
 
-        ORM::forTable('complex')
+        ORM::forTable('buildings')
             ->create(
                 [
                     'name' => $data['name'],
-                    'adress' => $data['adress'],
-                    'latitude' => $data['latitude'],
-                    'longitude' => $data['longitude'],
+                    'planning_date' => $data['planning_date'],
+                    'floors' => $data['floors'],
+                    'complex_id' => $args['complex_id']
                 ]
             )->save();
 
-        return $response->withStatus(302)->withHeader('Location', '/complex/' . $args['id'] . '/buildings');
+        return $response->withStatus(302)->withHeader('Location', '/complex/' . $args['complex_id'] . '/buildings');
     }
     public function editBuildingPage(RequestInterface $request, ResponseInterface $response, $args)
     {
@@ -49,24 +50,22 @@ class BuildingController extends Controller
 
         $data = $request->getParsedBody();
 
-        ORM::forTable('complex')->findOne($args['id'])->set(
+        ORM::forTable('buildings')->findOne($args['building_id'])->set(
             [
                 'name' => $data['name'],
-                'adress' => $data['adress'],
-                'latitude' => $data['latitude'],
-                'longitude' => $data['longitude'],
-
+                'planning_date' => $data['planning_date'],
+                'floors' => $data['floors'],
             ]
         )->save();
 
-        return $response->withStatus(302)->withHeader('Location', '/complex/' . $args['id'] . '/buildings');
+        return $response->withStatus(302)->withHeader('Location', '/complex/' . $args['complex_id'] . '/buildings');
     }
 
     public function buildingDelete(RequestInterface $request, ResponseInterface $response, $args)
     {
-        ORM::forTable('complex')->findOne($args['id'])->delete();
+        ORM::forTable('buildings')->findOne($args['building_id'])->delete();
 
-        return $response->withStatus(302)->withHeader('Location', '/complex/' . $args['id'] . '/buildings');
+        return $response->withStatus(302)->withHeader('Location', '/complex/' . $args['complex_id'] . '/buildings');
     }
 
 }

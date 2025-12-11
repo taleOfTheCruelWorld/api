@@ -14,6 +14,7 @@ use Src\Middleware\AdminMiddleware;
 use Src\Middleware\ManagerMiddleware;
 use Src\Middleware\AuthMiddleware;
 use Src\Controllers\BuildingController;
+use Src\Controllers\LayoutController;
 
 
 
@@ -54,6 +55,8 @@ $app->group('/', function () use ($app) {
     $app->post('/complex/{id}/edit', [ComplexController::class, 'editComplex']);
     $app->get('/complex/{id}/delete', [ComplexController::class, 'complexDelete']);
 
+    #layouts
+
     #buildings
     $app->get('/complex/{complex_id}/buildings/create', [BuildingController::class, 'addBuildingPage']);
     $app->post('/complex/{complex_id}/buildings/create', [BuildingController::class, 'addBuilding']);
@@ -64,6 +67,8 @@ $app->group('/', function () use ($app) {
 
     #apartments
 
+    
+
 })->add(new ManagerMiddleware($container->get(ResponseFactory::class)));
 
 
@@ -71,7 +76,9 @@ $app->group('/', function () use ($app) {
     $app->get('/', [HomeController::class, "home"]);
     $app->get('/logout', [AuthController::class, "logout"]);
     $app->get('/complex', [ComplexController::class, 'show']);
-    $app->get('/complex/{complex_id}/buildings', [BuildingController::class, 'show']);
+    $app->get('/complex/{complex_id}/layouts', [LayoutController::class, 'show']);
+    $app->get('/complex/{complex_id}/buildings', [ComplexController::class, 'about']);
+    $app->get('/complex/{complex_id}/buildings/{building_id}/apartments', [BuildingController::class, 'about']);
 })->add(new AuthMiddleware($container->get(ResponseFactory::class)));
 
 
