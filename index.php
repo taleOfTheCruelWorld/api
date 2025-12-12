@@ -10,6 +10,7 @@ use Src\Controllers\AuthController;
 use Src\Controllers\HomeController;
 use Src\Controllers\ApiController;
 use Src\Controllers\ComplexController;
+use Src\Controllers\UserController;
 use Src\Middleware\AdminMiddleware;
 use Src\Middleware\ManagerMiddleware;
 use Src\Middleware\AuthMiddleware;
@@ -44,7 +45,8 @@ $app->get('/api/apartments', [ApiController::class, "getApartments"]);
 
 
 $app->group('/', function () use ($app) {
-
+    $app->get('/admin/new-user', [UserController::class, 'addUserPage']);
+    $app->post('/admin/new-user', [UserController::class, 'addUser']);
 })->add(new AdminMiddleware($container->get(ResponseFactory::class)));
 
 
