@@ -39,7 +39,7 @@ ORM::configure('password', 'tiger');
 
 $app->get('/login', [AuthController::class, "loginPage"]);
 $app->post('/login', [AuthController::class, "login"]);
-$app->get('/api/buildings/{slug}', [ApiController::class, "getBuilding"]);
+$app->get('/api/comlex/{slug}', [ApiController::class, "getComplex"]);
 $app->get('/api/apartments', [ApiController::class, "getApartments"]);
 
 

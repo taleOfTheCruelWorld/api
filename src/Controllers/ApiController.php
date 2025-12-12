@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class ApiController extends Controller
 {
-    public function getBuilding(RequestInterface $request, ResponseInterface $response, $args) {
+    public function getComplex(RequestInterface $request, ResponseInterface $response, $args) {
         $complex = \ORM::forTable('complex')->where('slug',$args['slug'])->findOne();
         if (!$complex) {
             $data = null;
