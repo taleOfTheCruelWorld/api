@@ -36,6 +36,7 @@ class ApiController extends Controller
             }
             $data[$i]['images'] = json_encode($data[$i]['images']);
         } 
+        $response->getBody()->write(json_encode($data));
         return $response->withHeader('Content-Type', 'application/json');
     }
 }
