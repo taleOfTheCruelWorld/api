@@ -10,6 +10,7 @@
 
 <body>
     <a href="/logout">logout</a>
+    <a href="/complex">complex list</a>
 </body>
 
 </html>

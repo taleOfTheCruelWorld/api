@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1>edit layout</h1>
+    <h1>edit image of apartment</h1>
     <form action="" method="post" enctype="multipart/form-data">
         <label for="">image</label>
         <input type="file" name="image">
