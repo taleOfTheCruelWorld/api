@@ -22,13 +22,13 @@ class LayoutController extends Controller
     {
 
 
-        $uploaddir = $_SERVER['DOCUMENT_ROOT'] . '/layouts/';
+        $uploaddir = $_SERVER['DOCUMENT_ROOT'] . '/storage/layouts/';
         $uploadfile = $uploaddir . basename($_FILES['image']['name']);
         move_uploaded_file($_FILES['image']['tmp_name'], $uploadfile);
         
         ORM::forTable('layouts')->create(
             [
-                'image' => $_FILES['image']['name'],
+                'image' => '/layouts/' . $_FILES['image']['name'],
                 'complex_id' => $args['complex_id']
             ]
         )->save();
@@ -43,14 +43,14 @@ class LayoutController extends Controller
     }
     public function editLayout(RequestInterface $request, ResponseInterface $response, $args)
     {
-        $uploaddir = $_SERVER['DOCUMENT_ROOT'] . '/layouts/';
+        $uploaddir = $_SERVER['DOCUMENT_ROOT'] . '/storage/layouts/';
         $uploadfile = $uploaddir . basename($_FILES['image']['name']);
         move_uploaded_file($_FILES['image']['tmp_name'], $uploadfile);
 
         $data = $request->getParsedBody();
         ORM::forTable('layouts')->findOne($args['layout_id'])->set(
             [
-                'image' => $_FILES['image']['name'],
+                'image' => '/layouts/' . $_FILES['image']['name'],
             ]
         )->save();
         return $response->withStatus(302)->withHeader('Location', '/complex/' . $args['complex_id'] . '/layouts');

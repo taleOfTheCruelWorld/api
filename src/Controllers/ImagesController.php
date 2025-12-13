@@ -17,14 +17,14 @@ class ImagesController extends Controller
     public function addImage(RequestInterface $request, ResponseInterface $response, $args)
     {
 
-        $uploaddir = $_SERVER['DOCUMENT_ROOT'] . '/images_of_apartments/';
+        $uploaddir = $_SERVER['DOCUMENT_ROOT'] . '/storage/images_of_apartments/';
         $uploadfile = $uploaddir . basename($_FILES['image']['name']);
         move_uploaded_file($_FILES['image']['tmp_name'], $uploadfile);
 
         ORM::forTable('images_of_apartments')
             ->create(
                 [
-                    'image' => $_FILES['image']['name'],
+                    'image' => '/images_of_apartments/' . $_FILES['image']['name'],
                     'apartments_id' => $args['apartment_id'],
                 ]
             )->save();
@@ -42,7 +42,7 @@ class ImagesController extends Controller
     public function editImage(RequestInterface $request, ResponseInterface $response, $args)
     {
 
-        $uploaddir = $_SERVER['DOCUMENT_ROOT'] . '/images_of_apartments/';
+        $uploaddir = $_SERVER['DOCUMENT_ROOT'] . '/storage/images_of_apartments/';
         $uploadfile = $uploaddir . basename($_FILES['image']['name']);
         move_uploaded_file($_FILES['image']['tmp_name'], $uploadfile);
 
@@ -50,7 +50,7 @@ class ImagesController extends Controller
             ->findOne($args['image_id'])
             ->set(
                 [
-                    'image' => $_FILES['image']['name'],
+                    'image' => '/images_of_apartments/' . $_FILES['image']['name'],
                 ]
             )->save();
 

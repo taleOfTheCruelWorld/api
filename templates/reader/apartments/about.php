@@ -21,7 +21,7 @@
     <table>
         <? foreach ($images as $img): ?>
             <tr>
-                <td><img src="/images_of_apartments/<?= $img['image'] ?>" alt=""></td>
+                <td><img src="/storage<?= $img['image'] ?>" alt=""></td>
                 <td><a
                         href="/complex/<?= $complex_id ?>/buildings/<?= $building_id ?>/apartments/<?= $apartment_id ?>/images/<?= $img['id'] ?>/edit">edit</a>
                 </td>

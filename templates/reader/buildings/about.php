@@ -32,7 +32,7 @@
                 <td><?= $app['rooms'] ?></td>
                 <td><?= $app['floor'] ?></td>
                 <td><?= $app['price'] ?></td>
-                <td><img src="/layouts/<?=$app['layout']?>"></td>
+                <td><img src="/storage<?=$app['layout']?>"></td>
                 <td><a
                         href="/complex/<?= $complex_id ?>/buildings/<?= $building_id ?>/apartments/<?= $app['id'] ?>/edit">edit</a>
                 </td>

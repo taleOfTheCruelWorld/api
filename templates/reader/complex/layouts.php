@@ -21,7 +21,7 @@
     <table>
         <? foreach ($layouts as $layout): ?>
             <tr>
-                <td><img src="/layouts/<?= $layout['image'] ?>" alt=""></td>
+                <td><img src="/storage<?= $layout['image'] ?>" alt=""></td>
                 <td><a href="/complex/<?=$complex_id?>/layouts/<?=$layout['id']?>/edit">edit</a></td>
                 <td><a href="/complex/<?=$complex_id?>/layouts/<?=$layout['id']?>/delete">delete</a></td>
             </tr>
