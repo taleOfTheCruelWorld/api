@@ -8,11 +8,9 @@
 </head>
 
 <body>
-    <h1>add user</h1>
+    <h1>edit user</h1>
     <form action="" method="post">
-        <label for="">login</label>
-        <input type="text" name='login'>
-        <label for="">password</label>
+        <input type="text" name='login' value="<?=$login?>">
         <input type="text" name='password'>
         <select name="role">
             <option value="admin">admin</option>

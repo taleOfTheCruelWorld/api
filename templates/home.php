@@ -11,6 +11,7 @@
 <body>
     <a href="/logout">logout</a>
     <a href="/complex">complex list</a>
+    <a href="/admin/users">users</a>
 </body>
 
 </html>

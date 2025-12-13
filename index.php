@@ -45,8 +45,12 @@ $app->get('/api/apartments', [ApiController::class, "getApartments"]);
 
 
 $app->group('/', function () use ($app) {
-    $app->get('/admin/new-user', [UserController::class, 'addUserPage']);
-    $app->post('/admin/new-user', [UserController::class, 'addUser']);
+    $app->get('/admin/users', [UserController::class, 'usersPage']);
+    $app->get('/admin/users/new-user', [UserController::class, 'addUserPage']);
+    $app->post('/admin/users/new-user', [UserController::class, 'addUser']);
+    $app->get('/admin/users/{user_id}/edit', [UserController::class, 'editUserPage']);
+    $app->post('/admin/users/{user_id}/edit', [UserController::class, 'editUser']);
+    $app->get('/admin/users/{user_id}/delete', [UserController::class, 'deleteUser']);
 })->add(new AdminMiddleware($container->get(ResponseFactory::class)));
 
 
