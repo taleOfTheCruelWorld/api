@@ -29,13 +29,13 @@ class ApiController extends Controller
     }
     public function getApartments(RequestInterface $request, ResponseInterface $response, $args) {
         $data = \ORM::forTable('apartments')->rawQuery('SELECT ap.*, JSON_ARRAYAGG(im.image) AS images FROM `apartments` as ap LEFT JOIN images_of_apartments as im on ap.id=im.apartments_id GROUP BY ap.id')->findArray();
-        foreach ($data as $apartment) {
-            foreach (json_decode($apartment['images']) as $image) {
-                $image = 'http://185.254.158.23'. $image;
+        for ($i=0; $i < count($data); $i++) { 
+            $data[$i]['images'] = json_decode($data[$i]['images']);
+            for ($j=0; $j < count($data[$i]['images']); $j++) { 
+                $data[$i]['images'][$j] = "http://185.254.158.23/storage" . $data[$i]['images'][$j];
             }
-            json_encode($apartment['images']);
-        }
-        $response->getBody()->write(json_encode($data));
+            $data[$i]['images'] = json_encode($data[$i]['images']);
+        } 
         return $response->withHeader('Content-Type', 'application/json');
     }
 }
