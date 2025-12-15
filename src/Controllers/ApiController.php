@@ -34,7 +34,7 @@ class ApiController extends Controller
             for ($j=0; $j < count($data[$i]['images']); $j++) { 
                 $data[$i]['images'][$j] = "http://185.254.158.23/storage" . $data[$i]['images'][$j];
             }
-            $data[$i]['images'] = json_encode($data[$i]['images']);
+            $data[$i]['images'] = $data[$i]['images'];
         } 
         $response->getBody()->write(json_encode($data));
         return $response->withHeader('Content-Type', 'application/json');
